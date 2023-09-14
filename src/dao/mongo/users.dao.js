@@ -1,6 +1,6 @@
 import usersModel from "./models/users.model.js";
 
-export default class User {
+export default class UsersDao {
   //Método asyncrono realizar el login
   login = async (username, password) => {
     try {

@@ -1,22 +1,18 @@
 import { Router } from "express";
-import Cart from "../dao/dbmanager/carts.manager.js";
+import {
+  getAll,
+  getOne,
+  saveCart,
+  updateCart,
+  emptyCart,
+  populatedCart,
+} from "../dao/mongo/carts.dao.js";
 
 //Inicializar servicios
 const router = Router();
-const cartsManager = new Cart();
 
 //Método asyncrono para obtener todos los carritos
-router.get("/", async (req, res) => {
-  try {
-    const carts = await cartsManager.getAll();
-    res.json(carts);
-  } catch (err) {
-    res.status(500).json({
-      message: "Error al obtener los carritos",
-      data: err,
-    });
-  }
-});
+router.get("/", getAll);
 
 //Método asyncrono para obtener un carrito
 router.get("/cartbadge/:cid", async (req, res) => {
