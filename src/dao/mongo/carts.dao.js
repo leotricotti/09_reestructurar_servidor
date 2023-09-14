@@ -1,4 +1,4 @@
-import cartsModel from "../models/carts.model.js";
+import cartsModel from "./models/carts.model.js";
 
 export default class Cart {
   // Método asyncrono para obtener todos los carritos
