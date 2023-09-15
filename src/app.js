@@ -27,6 +27,7 @@ const productsManager = new Products();
 
 //Variables
 const app = express();
+export let isConnected = false;
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -73,6 +74,7 @@ app.use(passport.initialize());
 const enviroment = async () => {
   try {
     await mongoose.connect(MONGO_URI);
+    isConnected = true;
     console.log("Base de datos conectada");
   } catch (error) {
     console.log(error);
