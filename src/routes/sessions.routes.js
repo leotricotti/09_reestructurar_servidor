@@ -1,8 +1,16 @@
 import passport from "passport";
 import * as dotenv from "dotenv";
 import { Router } from "express";
-import User from "../dao/dbmanager/users.manager.js";
 import { createHash } from "../utils.js";
+import User from "../dao/dbmanager/users.manager.js";
+import {
+  singupUser,
+  failRegister,
+  loginUser,
+  forgotPassword,
+  githubCallback,
+  handleLogout,
+} from "../controllers/sessions.controller.js";
 
 //Inicializa servicios
 dotenv.config();
@@ -15,15 +23,11 @@ router.post(
   passport.authenticate("register", {
     failureRedirect: "/api/sessions/failRegister",
   }),
-  async (req, res) => {
-    res.status(200).json({ message: "Usuario creado con éxito" });
-  }
+  singupUser
 );
 
 //Ruta que se ejecuta cuando falla el registro
-router.get("/failRegister", async (req, res) => {
-  res.status(500).json({ error: "Error al crear el ususario" });
-});
+router.get("/failRegister", failRegister);
 
 //Ruta que realiza el login
 router.post(
@@ -31,49 +35,13 @@ router.post(
   passport.authenticate("login", {
     failureRedirect: "/api/sessions/failLogin",
   }),
-  async (req, res) => {
-    if (!req.user) {
-      return res.status(401).json("Error de autenticacion");
-    }
-    req.session.user = {
-      first_name: req.user[0].first_name,
-      last_name: req.user[0].last_name,
-      email: req.user[0].email,
-      age: req.user[0].age,
-      role: req.user[0].role,
-    };
-    res.status(200).json({ message: "Usuario logueado con éxito" });
-  }
+  loginUser
 );
 
 //Ruta que recupera la contraseña
-router.post("/forgot", async (req, res) => {
-  const { username, newPassword } = req.body;
-
-  const result = await usersManager.getOne(username);
-  if (result.length === 0)
-    return res.status(401).json({
-      respuesta: "El usuario no existe",
-    });
-  else {
-    const updatePassword = await usersManager.updatePassword(
-      result[0]._id,
-      createHash(newPassword)
-    );
-    res.status(200).json({
-      respuesta: "Contrseña actualizada con éxito",
-    });
-  }
-});
+router.post("/forgot", forgotPassword);
 
 //Ruta que cierra la sesión
-const handleLogout = (req, res) => {
-  req.logout(() => {
-    req.session.destroy();
-    res.redirect("/");
-  });
-};
-
 router.get("/logout", handleLogout);
 
 //Ruta que realiza el login con github
@@ -90,10 +58,7 @@ router.get(
 router.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/login" }),
-  async (req, res) => {
-    req.session.user = req.user;
-    res.redirect("/api/products?page=1");
-  }
+  githubCallback
 );
 
 export default router;
