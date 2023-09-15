@@ -6,7 +6,7 @@ const cartBadge = async () => {
     if (!cartId) {
       cartBadge.innerText = 0;
     } else {
-      const response = await fetch(`/api/carts/cartbadge/${cartId}`);
+      const response = await fetch(`/api/carts/${cartId}`);
       if (!response.ok) {
         throw new Error("Error al obtener el carrito");
       }
