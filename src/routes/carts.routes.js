@@ -1,12 +1,4 @@
 import { Router } from "express";
-import {
-  getAll,
-  getOne,
-  saveCart,
-  updateCart,
-  emptyCart,
-  populatedCart,
-} from "../dao/mongo/carts.dao.js";
 
 //Inicializar servicios
 const router = Router();
