@@ -6,7 +6,7 @@ import {
   addProduct,
   deleteProduct,
   emptyCart,
-  popuatedCartd,
+  populatedCart,
 } from "../controllers/carts.controller.js";
 
 //Inicializar servicios
@@ -17,6 +17,9 @@ router.get("/", getAll);
 
 //Método asyncrono para obtener un carrito
 router.get("/:cid", getOne);
+
+//Método asyncrono para mostrar los productos del carrito
+router.get("/populated", populatedCart);
 
 //Método asyncrono para crear un carrito
 router.post("/", createCart);
