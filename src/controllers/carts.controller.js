@@ -34,7 +34,7 @@ async function getOne(req, res) {
 }
 
 //Método asyncrono para popular el carrito
-async function populatedCartd(req, res) {
+async function populatedCart(req, res) {
   const { cid } = req.params;
   try {
     const cart = await CARTSDAO.populatedCart(cid);
@@ -152,5 +152,5 @@ export {
   addProduct,
   deleteProduct,
   emptyCart,
-  populatedCartd,
+  populatedCart,
 };

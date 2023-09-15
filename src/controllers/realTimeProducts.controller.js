@@ -1,5 +1,5 @@
 import { USERSDAO } from "../dao/index.dao";
-import { PRODUCTSDAO } from "../dao/index.dao";
+import { PRODUCTSDAO } from "../dao/index.dao.js";
 
 // Método asyncrono para obtener los productos en tiempo real
 async function getProducts(req, res) {
@@ -36,7 +36,7 @@ async function saveProduct(req, res) {
     };
 
     try {
-      let result = await productsManager.saveProducts(product);
+      let result = await PRODUCTSDAO.saveProducts(product);
       res.json({ message: "Producto creado con éxito", data: product });
     } catch (err) {
       res

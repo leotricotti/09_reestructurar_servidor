@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getProducts,
   saveProduct,
-} from "../controllers/products.controller.js";
+} from "../controllers/realTimeProducts.controller.js";
 
 //Inicializar servicios
 const router = Router();
