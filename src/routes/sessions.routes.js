@@ -1,8 +1,5 @@
 import passport from "passport";
-import * as dotenv from "dotenv";
 import { Router } from "express";
-import { createHash } from "../utils.js";
-import User from "../dao/dbmanager/users.manager.js";
 import {
   singupUser,
   failRegister,
@@ -13,9 +10,7 @@ import {
 } from "../controllers/sessions.controller.js";
 
 //Inicializa servicios
-dotenv.config();
 const router = Router();
-const usersManager = new User();
 
 //Ruta que realiza el registro
 router.post(

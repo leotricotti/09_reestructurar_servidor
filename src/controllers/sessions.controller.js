@@ -1,7 +1,6 @@
-import passport from "passport";
 import * as dotenv from "dotenv";
-import { USERSDAO } from "../dao/index.dao.js";
 import { createHash } from "../utils.js";
+import { USERSDAO } from "../dao/index.dao.js";
 
 //Inicializa servicios
 dotenv.config();
