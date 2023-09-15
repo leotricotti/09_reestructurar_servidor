@@ -13,8 +13,8 @@ import LoginRouter from "./routes/login.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import ForgotRouter from "./routes/forgot.routes.js";
 import SessionsRouter from "./routes/sessions.routes.js";
+import { PRODUCTSDAO } from "./dao/index.dao.js";
 import ProductsRouter from "./routes/products.routes.js";
-import Products from "./dao/dbmanager/products.manager.js";
 import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 import {
   initializePassport,
@@ -108,7 +108,7 @@ io.on("connection", async (socket) => {
   // Obtener datos de la base de datos
   socket.on("nextPage", async (page) => {
     try {
-      const products = await productsManager.getAll();
+      const products = await PRODUCTSDAO.getAll();
       const orderedProducts = products.reverse();
       const paginatedProducts = orderedProducts.slice(0, page * 10);
       io.emit("products", paginatedProducts);

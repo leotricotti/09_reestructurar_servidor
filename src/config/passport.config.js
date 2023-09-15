@@ -2,12 +2,11 @@ import passport from "passport";
 import * as dotenv from "dotenv";
 import local from "passport-local";
 import GitHubStrategy from "passport-github2";
-import User from "../dao/dbmanager/users.manager.js";
+import { USERSDAO } from "../dao/index.dao.js";
 import { createHash, isValidPassword } from "../utils.js";
 
 // Inicializar servicios
 dotenv.config();
-const userManager = new User();
 const LocalStrategy = local.Strategy;
 
 const ADMIN_ID = process.env.ADMIN_ID;
@@ -31,7 +30,7 @@ const initializePassport = () => {
           role = "user";
         }
         try {
-          const user = await userManager.getOne(username);
+          const user = await USERSDAO.getOne(username);
           if (user.length > 0) {
             return done(null, false, {
               message: "Error al crear el usuario. El usuario ya existe",
@@ -45,7 +44,7 @@ const initializePassport = () => {
               password: createHash(password),
               role: role,
             };
-            let result = await userManager.signup(newUser);
+            let result = await USERSDAO.signup(newUser);
             return done(null, result);
           }
         } catch (error) {
@@ -66,7 +65,7 @@ const initializePassport = () => {
       },
       async (req, username, password, done) => {
         try {
-          const user = await userManager.getOne(username);
+          const user = await USERSDAO.getOne(username);
           if (user.length === 0) {
             return done(null, false, {
               message: "El usuario no existe",
@@ -90,7 +89,7 @@ const initializePassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await userManager.getOne(id);
+    let user = await USERSDAO.getOne(id);
     done(null, user);
   });
 };
@@ -107,7 +106,7 @@ const githubStrategy = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const user = await userManager.getOne(profile?.emails[0]?.value);
+          const user = await USERSDAO.getOne(profile?.emails[0]?.value);
           if (user.length === 1) {
             return done(null, user);
           } else {
@@ -118,7 +117,7 @@ const githubStrategy = () => {
               age: 18,
               password: "123",
             };
-            const userNew = await userManager.signup(newUser);
+            const userNew = await USERSDAO.signup(newUser);
             return done(null, userNew);
           }
         } catch (error) {
@@ -134,7 +133,7 @@ const githubStrategy = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await userManager.getOne(id);
+    let user = await USERSDAO.getOne(id);
     done(null, user);
   });
 };

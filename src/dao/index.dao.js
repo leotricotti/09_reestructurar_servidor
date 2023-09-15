@@ -1,10 +1,10 @@
-import mongoCartsDao from "./mongo/carts.dao";
-import mongoUsersDao from "./mongo/users.dao";
-import { PERSISTENCE } from "../config/config";
-import memoryCartsDao from "./memory/carts.dao";
-import memoryUsersDao from "./memory/users.dao";
-import mongoProductsDao from "./mongo/products.dao";
-import memoryProductsDao from "./memory/products.dao";
+import mongoCartsDao from "./mongo/carts.dao.js";
+import mongoUsersDao from "./mongo/users.dao.js";
+import { PERSISTENCE } from "../config/config.js";
+import memoryCartsDao from "./memory/carts.dao.js";
+import memoryUsersDao from "./memory/users.dao.js";
+import mongoProductsDao from "./mongo/products.dao.js";
+import memoryProductsDao from "./memory/products.dao.js";
 
 export const CARTSDAO =
   PERSISTENCE === "MONGO" ? mongoCartsDao : memoryCartsDao;

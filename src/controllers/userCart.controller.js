@@ -1,4 +1,4 @@
-import { USERSDAO } from "../dao/index.dao";
+import { USERSDAO } from "../dao/index.dao.js";
 
 //Ruta que agrega el id del carrito al usuario
 async function addCartIDToUser(req, res) {

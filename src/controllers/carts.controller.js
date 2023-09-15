@@ -1,4 +1,4 @@
-import { CARTSDAO } from "../dao/index.dao";
+import { CARTSDAO } from "../dao/index.dao.js";
 
 //Método asyncrono para obtener todos los carritos
 async function getAll(req, res) {

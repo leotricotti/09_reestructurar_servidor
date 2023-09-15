@@ -1,5 +1,5 @@
 import { Router } from "express";
-import addCartIDToUser from "../controllers/userCart.controller";
+import addCartIDToUser from "../controllers/userCart.controller.js";
 
 const router = Router();
 
