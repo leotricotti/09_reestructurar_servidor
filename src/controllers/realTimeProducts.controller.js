@@ -1,4 +1,4 @@
-import { USERSDAO } from "../dao/index.dao";
+import { USERSDAO } from "../dao/index.dao.js";
 import { PRODUCTSDAO } from "../dao/index.dao.js";
 
 // Método asyncrono para obtener los productos en tiempo real

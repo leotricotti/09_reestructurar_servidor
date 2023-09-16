@@ -23,11 +23,10 @@ import {
 
 // Inicializar servicios
 dotenv.config();
-const productsManager = new Products();
 
 //Variables
 const app = express();
-export let isConnected = false;
+let isConnected = false;
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -70,8 +69,8 @@ githubStrategy();
 initializePassport();
 app.use(passport.initialize());
 
-// Conexión respuesta de la base de datos
-const enviroment = async () => {
+//Función asincrónica para conectar a la base de datos  y chequear si está conectada
+async function connectToDatabase() {
   try {
     await mongoose.connect(MONGO_URI);
     isConnected = true;
@@ -79,9 +78,13 @@ const enviroment = async () => {
   } catch (error) {
     console.log(error);
   }
-};
+}
 
-enviroment();
+connectToDatabase();
+
+export function getIsConnected() {
+  return isConnected;
+}
 
 // Routes
 app.use("/", LoginRouter);
