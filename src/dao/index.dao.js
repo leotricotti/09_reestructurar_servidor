@@ -5,6 +5,6 @@ import memoryUsersDao from "./memory/users.dao.js";
 import mongoProductsDao from "./mongo/products.dao.js";
 import memoryProductsDao from "./memory/products.dao.js";
 
-export const CARTSDAO = mongoCartsDao;
-export const USERSDAO = mongoUsersDao;
-export const PRODUCTSDAO = mongoProductsDao;
+export const CARTSDAO = new mongoCartsDao();
+export const USERSDAO = new mongoUsersDao();
+export const PRODUCTSDAO = new mongoProductsDao();

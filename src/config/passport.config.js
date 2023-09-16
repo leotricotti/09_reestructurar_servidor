@@ -64,6 +64,7 @@ const initializePassport = () => {
         passwordField: "password",
       },
       async (req, username, password, done) => {
+        console.log(username, password);
         try {
           const user = await USERSDAO.getOne(username);
           if (user.length === 0) {
