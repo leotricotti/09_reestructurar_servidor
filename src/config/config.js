@@ -1,3 +1,1 @@
-import { isConnected } from "../app.js";
-
-export const PERSISTENCE = isConnected ? "MONGO" : "MEMORY";
+export const PERSISTENCE = "MONGO";
