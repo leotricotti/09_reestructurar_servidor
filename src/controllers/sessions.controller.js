@@ -24,7 +24,6 @@ async function loginUser(req, res) {
     first_name: req.user[0].first_name,
     last_name: req.user[0].last_name,
     email: req.user[0].email,
-    age: req.user[0].age,
     role: req.user[0].role,
   };
   res.status(200).json({ message: "Usuario logueado con éxito" });

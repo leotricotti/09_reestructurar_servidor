@@ -27,7 +27,6 @@ dotenv.config();
 
 //Variables
 const app = express();
-let isConnected = false;
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -72,21 +71,16 @@ initializePassport();
 app.use(passport.initialize());
 
 //Función asincrónica para conectar a la base de datos  y chequear si está conectada
-async function connectToDatabase() {
+async function enviroment() {
   try {
     await mongoose.connect(MONGO_URI);
-    isConnected = true;
     console.log("Base de datos conectada");
   } catch (error) {
     console.log(error);
   }
 }
 
-connectToDatabase();
-
-export function getIsConnected() {
-  return isConnected;
-}
+enviroment();
 
 // Routes
 app.use("/", LoginRouter);
