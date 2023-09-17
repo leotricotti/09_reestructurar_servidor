@@ -5,37 +5,27 @@ import { USERSDAO } from "../dao/index.dao.js";
 async function getAll(req, res) {
   const { limit, page, sort, category } = req.query;
   try {
-    const role = req.session.user[0]?.role ?? req.session.user.role;
-    const sessionUser = req.session.user[0]?.email ?? req.session.user.email;
-    const user = await USERSDAO.getOne(sessionUser);
     const response = await PRODUCTSDAO.getAll();
+    console.log(response);
     if (limit) {
       const tempArray = response.slice(0, limit);
       res.json({
         products: tempArray,
-        user: user[0].first_name,
-        admin: role,
       });
     } else if (category) {
       let filteredProducts = await PRODUCTSDAO.filteredProducts(category);
       res.json({
         products: filteredProducts.docs,
-        user: user[0].first_name,
-        admin: role,
       });
     } else if (sort) {
       let orderedProducts = await PRODUCTSDAO.orderedProducts(sort);
       res.json({
         products: orderedProducts,
-        user: user[0].first_name,
-        admin: role,
       });
     } else {
       let paginatedProducts = await PRODUCTSDAO.paginatedProducts(page);
       res.json({
         products: paginatedProducts.docs,
-        user: user[0].first_name,
-        admin: role,
       });
     }
   } catch (err) {
