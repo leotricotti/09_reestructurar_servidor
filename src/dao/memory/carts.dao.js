@@ -1,11 +1,11 @@
-import cartsModel from "../models/carts.model.js";
-
-export default class Cart {
+export default class CartsDao {
+  constructor() {
+    this.carts = [];
+  }
   // Método asyncrono para obtener todos los carritos
   getAll = async () => {
     try {
-      const result = await cartsModel.find().lean();
-      return result;
+      return this.carts;
     } catch (error) {
       console.log(error);
       return [];
@@ -15,8 +15,8 @@ export default class Cart {
   // Método asyncrono para obtener un carrito
   getOne = async (id) => {
     try {
-      const result = await cartsModel.findById(id).lean();
-      return result;
+      const cart = this.carts.find((cart) => cart._id === id);
+      return cart;
     } catch (error) {
       console.log(error);
       return [];
@@ -26,8 +26,8 @@ export default class Cart {
   // Método asyncrono para crear un carrito
   saveCart = async (cart) => {
     try {
-      const result = await cartsModel.create(cart);
-      return result;
+      this.carts.push(cart);
+      return cart;
     } catch (error) {
       console.log(error);
       return [];
@@ -37,8 +37,9 @@ export default class Cart {
   // Método asyncrono para eliminar un producto del carrito
   updateCart = async (id, cart) => {
     try {
-      const result = await cartsModel.updateOne({ _id: id }, cart);
-      return result;
+      const index = this.carts.findIndex((cart) => cart._id === id);
+      this.carts[index] = cart;
+      return cart;
     } catch (error) {
       console.log(error);
       return [];
@@ -48,19 +49,9 @@ export default class Cart {
   // Método asyncrono para vaciar el carrito
   emptyCart = async (id, cart) => {
     try {
-      const result = await cartsModel.updateOne({ _id: id }, cart);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  };
-
-  // Método asyncrono para popular el carrito
-  populatedCart = async (id) => {
-    try {
-      const result = await cartsModel.findById(id).populate("products.product");
-      return result;
+      const index = this.carts.findIndex((cart) => cart._id === id);
+      this.carts[index] = cart;
+      return cart;
     } catch (error) {
       console.log(error);
       return [];

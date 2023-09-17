@@ -13,8 +13,8 @@ import LoginRouter from "./routes/login.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import ForgotRouter from "./routes/forgot.routes.js";
 import SessionsRouter from "./routes/sessions.routes.js";
+import { PRODUCTSDAO } from "./dao/index.dao.js";
 import ProductsRouter from "./routes/products.routes.js";
-import Products from "./dao/dbmanager/products.manager.js";
 import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 import {
   initializePassport,
@@ -23,10 +23,10 @@ import {
 
 // Inicializar servicios
 dotenv.config();
-const productsManager = new Products();
 
 //Variables
 const app = express();
+let isConnected = false;
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -69,17 +69,22 @@ githubStrategy();
 initializePassport();
 app.use(passport.initialize());
 
-// Conexión respuesta de la base de datos
-const enviroment = async () => {
+//Función asincrónica para conectar a la base de datos  y chequear si está conectada
+async function connectToDatabase() {
   try {
     await mongoose.connect(MONGO_URI);
+    isConnected = true;
     console.log("Base de datos conectada");
   } catch (error) {
     console.log(error);
   }
-};
+}
 
-enviroment();
+connectToDatabase();
+
+export function getIsConnected() {
+  return isConnected;
+}
 
 // Routes
 app.use("/", LoginRouter);
@@ -106,7 +111,7 @@ io.on("connection", async (socket) => {
   // Obtener datos de la base de datos
   socket.on("nextPage", async (page) => {
     try {
-      const products = await productsManager.getAll();
+      const products = await PRODUCTSDAO.getAll();
       const orderedProducts = products.reverse();
       const paginatedProducts = orderedProducts.slice(0, page * 10);
       io.emit("products", paginatedProducts);
