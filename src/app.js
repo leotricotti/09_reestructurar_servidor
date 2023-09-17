@@ -7,12 +7,8 @@ import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import handlebars from "express-handlebars";
 import UserCart from "./routes/userCart.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
-import LoginRouter from "./routes/login.routes.js";
-import SignUpRouter from "./routes/signup.routes.js";
-import ForgotRouter from "./routes/forgot.routes.js";
 import SessionsRouter from "./routes/sessions.routes.js";
 import { PRODUCTSDAO } from "./dao/index.dao.js";
 import ProductsRouter from "./routes/products.routes.js";
@@ -35,21 +31,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-
-// Handlebars
-app.set("view engine", "handlebars");
-app.set("views", __dirname + "/views");
-app.engine(
-  "handlebars",
-  handlebars.engine({
-    defaultLayout: "main.handlebars",
-    extname: "hbs",
-    runtimeOptions: {
-      allowProtoPropertiesByDefault: true,
-      allowProtoMethodsByDefault: true,
-    },
-  })
-);
 
 // Connect to MongoDB
 app.use(
@@ -83,9 +64,6 @@ async function enviroment() {
 enviroment();
 
 // Routes
-app.use("/", LoginRouter);
-app.use("/forgot", ForgotRouter);
-app.use("/signup", SignUpRouter);
 app.use("/api/userCart", UserCart);
 app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter);
