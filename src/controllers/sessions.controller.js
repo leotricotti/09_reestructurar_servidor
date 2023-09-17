@@ -26,7 +26,10 @@ async function loginUser(req, res) {
     email: req.user[0].email,
     role: req.user[0].role,
   };
-  res.status(200).json({ message: "Usuario logueado con éxito" });
+  res.status(200).json({
+    message: "Usuario logueado con éxito",
+    data: { name: req.user[0].first_name, role: req.user[0].role },
+  });
 }
 
 //Ruta que recupera la contraseña

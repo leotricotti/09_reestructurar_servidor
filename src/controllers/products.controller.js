@@ -1,5 +1,4 @@
 import { PRODUCTSDAO } from "../dao/index.dao.js";
-import { USERSDAO } from "../dao/index.dao.js";
 
 // Método asyncrono para obtener todos los productos
 async function getAll(req, res) {
