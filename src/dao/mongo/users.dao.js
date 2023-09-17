@@ -3,7 +3,6 @@ import usersModel from "./models/users.model.js";
 export default class UsersDao {
   //Método asyncrono realizar el login
   login = async (username, password) => {
-    console.log(username, password);
     try {
       const result = await usersModel.find({
         email: username,

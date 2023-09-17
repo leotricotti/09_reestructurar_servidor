@@ -6,7 +6,6 @@ async function getAll(req, res) {
   const { limit, page, sort, category } = req.query;
   try {
     const response = await PRODUCTSDAO.getAll();
-    console.log(response);
     if (limit) {
       const tempArray = response.slice(0, limit);
       res.json({
