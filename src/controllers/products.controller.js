@@ -11,33 +11,29 @@ async function getAll(req, res) {
     const response = await PRODUCTSDAO.getAll();
     if (limit) {
       const tempArray = response.slice(0, limit);
-      res.render("products", {
+      res.json({
         products: tempArray,
-        styles: "products.styles.css",
         user: user[0].first_name,
         admin: role,
       });
     } else if (category) {
       let filteredProducts = await PRODUCTSDAO.filteredProducts(category);
-      res.render("products", {
+      res.json({
         products: filteredProducts.docs,
-        styles: "products.styles.css",
         user: user[0].first_name,
         admin: role,
       });
     } else if (sort) {
       let orderedProducts = await PRODUCTSDAO.orderedProducts(sort);
-      res.render("products", {
+      res.json({
         products: orderedProducts,
-        styles: "products.styles.css",
         user: user[0].first_name,
         admin: role,
       });
     } else {
       let paginatedProducts = await PRODUCTSDAO.paginatedProducts(page);
-      res.render("products", {
+      res.json({
         products: paginatedProducts.docs,
-        styles: "products.styles.css",
         user: user[0].first_name,
         admin: role,
       });
@@ -56,7 +52,7 @@ async function getOne(req, res) {
   try {
     const product = await PRODUCTSDAO.getOne(pid);
     if (product) {
-      res.render("products", {
+      res.json({
         products: tempArray,
         styles: "products.styles.css",
       });
