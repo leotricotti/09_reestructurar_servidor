@@ -15,7 +15,6 @@ const moveToGithub = () => {
 
 //Capturar datos del formulario de registro y los envía al servidor
 async function postLogin(username, password) {
-  console.log(username, password);
   try {
     const response = await fetch("/api/sessions/login", {
       method: "POST",

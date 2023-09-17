@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import passport from "passport";
 import * as dotenv from "dotenv";
@@ -31,6 +32,7 @@ const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
