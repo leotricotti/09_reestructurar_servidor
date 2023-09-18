@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Router } from "express";
 import {
-  singupUser,
+  signupUser,
   failRegister,
   loginUser,
   forgotPassword,
@@ -18,7 +18,7 @@ router.post(
   passport.authenticate("register", {
     failureRedirect: "/api/sessions/failRegister",
   }),
-  singupUser
+  signupUser
 );
 
 //Ruta que se ejecuta cuando falla el registro

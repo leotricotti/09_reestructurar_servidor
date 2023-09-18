@@ -2,15 +2,9 @@ import { PRODUCTSDAO } from "../dao/index.dao.js";
 
 // Método asyncrono para obtener todos los productos
 async function getAll(req, res) {
-  const { limit, page, sort, category } = req.query;
+  const { page, sort, category } = req.query;
   try {
-    const response = await PRODUCTSDAO.getAll();
-    if (limit) {
-      const tempArray = response.slice(0, limit);
-      res.json({
-        products: tempArray,
-      });
-    } else if (category) {
+    if (category) {
       let filteredProducts = await PRODUCTSDAO.filteredProducts(category);
       res.json({
         products: filteredProducts.docs,

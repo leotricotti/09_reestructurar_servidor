@@ -6,7 +6,7 @@ import { USERSDAO } from "../dao/index.dao.js";
 dotenv.config();
 
 //Ruta que realiza el registro
-async function singupUser(req, res) {
+async function signupUser(req, res) {
   res.status(200).json({ message: "Usuario creado con éxito" });
 }
 
@@ -67,7 +67,7 @@ async function githubCallback(req, res) {
 }
 
 export {
-  singupUser,
+  signupUser,
   failRegister,
   loginUser,
   forgotPassword,
