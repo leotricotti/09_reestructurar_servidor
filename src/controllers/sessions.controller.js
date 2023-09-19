@@ -42,7 +42,7 @@ async function forgotPassword(req, res) {
       respuesta: "El usuario no existe",
     });
   else {
-    const updatePassword = await usersManager.updatePassword(
+    const updatePassword = await USERSDAO.updatePassword(
       result[0]._id,
       createHash(newPassword)
     );
