@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import passport from "passport";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
-import { Server } from "socket.io";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import UserCart from "./routes/userCart.routes.js";
@@ -73,25 +72,4 @@ app.use("/api/realtimeproducts", RealTimeProducts);
 // Server
 const httpServer = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
-
-// Socket
-const io = new Server(httpServer);
-// Código para el manejo de conexiones de socket
-io.on("connection", async (socket) => {
-  // Mensaje de bienvenida al cliente que se conectó
-  console.log("Un cliente se ha conectado");
-
-  // Obtener datos de la base de datos
-  socket.on("nextPage", async (page) => {
-    try {
-      const products = await PRODUCTSDAO.getAll();
-      const orderedProducts = products.reverse();
-      const paginatedProducts = orderedProducts.slice(0, page * 10);
-      io.emit("products", paginatedProducts);
-    } catch (error) {
-      // Manejar el error
-      console.log(error);
-    }
-  });
 });
